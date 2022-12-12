@@ -1,0 +1,31 @@
+
+from typing import List
+
+"""
+次の条件を満たすとき、列iは列jより弱い
+    soldiersの数がiより少ない
+    soldiersの数が同じなら i < j
+"""
+
+
+class Solution:
+    def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+
+        weakest = []
+        selected = [False for _ in range(len(mat))]
+        for colIdx in range(len(mat[0])):
+            for rowIdx in range(len(mat)):
+                if mat[rowIdx][colIdx] == 0 and not selected[rowIdx]:
+                    weakest.append(rowIdx)
+                    selected[rowIdx] = True
+                    if len(weakest) == k:
+                        return weakest
+
+        for rowIdx in range(len(mat)):
+            if not selected[rowIdx]:
+                weakest.append(rowIdx)
+                selected[rowIdx] = True
+                if len(weakest) == k:
+                    return weakest
+
+        return weakest
